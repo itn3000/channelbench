@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>ComparisonByAllowAsync</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.10.14, OS=Windows 10.0.17134
+Intel Core i7-4712MQ CPU 2.30GHz (Haswell), 1 CPU, 8 logical and 4 physical cores
+Frequency=2240913 Hz, Resolution=446.2467 ns, Timer=TSC
+.NET Core SDK=2.1.300-rc1-008673
+  [Host]     : .NET Core 2.1.0-rc1 (CoreCLR 4.6.26426.02, CoreFX 4.6.26426.04), 64bit RyuJIT
+  Job-QLZWOS : .NET Core 2.0.6 (CoreCLR 4.6.26212.01, CoreFX 4.6.26212.01), 64bit RyuJIT
+  Job-SEZKKX : .NET Core 2.1.0-rc1 (CoreCLR 4.6.26426.02, CoreFX 4.6.26426.04), 64bit RyuJIT
+</code></pre>
+<pre><code>TargetCount=3  WarmupCount=3  
+</code></pre>
+
+<table>
+<thead><tr><th>   Method</th><th>Toolchain</th><th>LoopNum</th><th>WriteTaskNum</th><th>ReadTaskNum</th><th>AllowAsync</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Gen 0</th><th>Gen 1</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>AllowAsyncBench</td><td>.NET Core 2.0</td><td>10000</td><td>1</td><td>1</td><td>False</td><td>11.653 ms</td><td>0.7141 ms</td><td>0.0403 ms</td><td>250.0000</td><td>-</td><td>2.73 KB</td>
+</tr><tr><td>AllowAsyncBench</td><td>.NET Core 2.1</td><td>10000</td><td>1</td><td>1</td><td>False</td><td>11.013 ms</td><td>1.7051 ms</td><td>0.0963 ms</td><td>250.0000</td><td>-</td><td>2.69 KB</td>
+</tr><tr><td>AllowAsyncBench</td><td>.NET Core 2.0</td><td>10000</td><td>1</td><td>1</td><td>True</td><td>12.351 ms</td><td>3.2105 ms</td><td>0.1814 ms</td><td>250.0000</td><td>-</td><td>2.73 KB</td>
+</tr><tr><td>AllowAsyncBench</td><td>.NET Core 2.1</td><td>10000</td><td>1</td><td>1</td><td>True</td><td>10.855 ms</td><td>2.2629 ms</td><td>0.1279 ms</td><td>250.0000</td><td>-</td><td>2.69 KB</td>
+</tr><tr><td>AllowAsyncBench</td><td>.NET Core 2.0</td><td>10000</td><td>1</td><td>100</td><td>False</td><td>169.190 ms</td><td>65.8978 ms</td><td>3.7233 ms</td><td>17562.5000</td><td>-</td><td>39.01 KB</td>
+</tr><tr><td>AllowAsyncBench</td><td>.NET Core 2.1</td><td>10000</td><td>1</td><td>100</td><td>False</td><td>105.575 ms</td><td>64.6819 ms</td><td>3.6546 ms</td><td>15937.5000</td><td>-</td><td>28.03 KB</td>
+</tr><tr><td>AllowAsyncBench</td><td>.NET Core 2.0</td><td>10000</td><td>1</td><td>100</td><td>True</td><td>293.862 ms</td><td>13.3134 ms</td><td>0.7522 ms</td><td>35875.0000</td><td>-</td><td>39.09 KB</td>
+</tr><tr><td>AllowAsyncBench</td><td>.NET Core 2.1</td><td>10000</td><td>1</td><td>100</td><td>True</td><td>301.211 ms</td><td>146.6420 ms</td><td>8.2855 ms</td><td>33125.0000</td><td>-</td><td>28.24 KB</td>
+</tr><tr><td>AllowAsyncBench</td><td>.NET Core 2.0</td><td>10000</td><td>100</td><td>1</td><td>False</td><td>12.921 ms</td><td>1.6427 ms</td><td>0.0928 ms</td><td>265.6250</td><td>46.8750</td><td>31.09 KB</td>
+</tr><tr><td>AllowAsyncBench</td><td>.NET Core 2.1</td><td>10000</td><td>100</td><td>1</td><td>False</td><td>11.487 ms</td><td>0.8529 ms</td><td>0.0482 ms</td><td>281.2500</td><td>46.8750</td><td>20.99 KB</td>
+</tr><tr><td>AllowAsyncBench</td><td>.NET Core 2.0</td><td>10000</td><td>100</td><td>1</td><td>True</td><td>12.872 ms</td><td>0.2811 ms</td><td>0.0159 ms</td><td>265.6250</td><td>46.8750</td><td>31.09 KB</td>
+</tr><tr><td>AllowAsyncBench</td><td>.NET Core 2.1</td><td>10000</td><td>100</td><td>1</td><td>True</td><td>11.378 ms</td><td>1.1391 ms</td><td>0.0644 ms</td><td>296.8750</td><td>15.6250</td><td>20.99 KB</td>
+</tr><tr><td>AllowAsyncBench</td><td>.NET Core 2.0</td><td>10000</td><td>100</td><td>100</td><td>False</td><td>5.755 ms</td><td>1.0442 ms</td><td>0.0590 ms</td><td>492.1875</td><td>-</td><td>60.98 KB</td>
+</tr><tr><td>AllowAsyncBench</td><td>.NET Core 2.1</td><td>10000</td><td>100</td><td>100</td><td>False</td><td>2.810 ms</td><td>0.4191 ms</td><td>0.0237 ms</td><td>285.1563</td><td>-</td><td>40.82 KB</td>
+</tr><tr><td>AllowAsyncBench</td><td>.NET Core 2.0</td><td>10000</td><td>100</td><td>100</td><td>True</td><td>7.418 ms</td><td>3.4187 ms</td><td>0.1932 ms</td><td>562.5000</td><td>-</td><td>60.98 KB</td>
+</tr><tr><td>AllowAsyncBench</td><td>.NET Core 2.1</td><td>10000</td><td>100</td><td>100</td><td>True</td><td>4.918 ms</td><td>9.8277 ms</td><td>0.5553 ms</td><td>281.2500</td><td>-</td><td>40.83 KB</td>
+</tr></tbody></table>
+</body>
+</html>

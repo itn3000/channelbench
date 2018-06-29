@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>ComparisonByCollectionST</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.10.14, OS=Windows 10.0.17134
+Intel Core i7-4712MQ CPU 2.30GHz (Haswell), 1 CPU, 8 logical and 4 physical cores
+Frequency=2240913 Hz, Resolution=446.2467 ns, Timer=TSC
+.NET Core SDK=2.1.300-rc1-008673
+  [Host]     : .NET Core 2.1.0-rc1 (CoreCLR 4.6.26426.02, CoreFX 4.6.26426.04), 64bit RyuJIT
+  Job-YJTPQZ : .NET Core 2.0.6 (CoreCLR 4.6.26212.01, CoreFX 4.6.26212.01), 64bit RyuJIT
+  Job-UBCRTU : .NET Core 2.1.0-rc1 (CoreCLR 4.6.26426.02, CoreFX 4.6.26426.04), 64bit RyuJIT
+</code></pre>
+<pre><code>TargetCount=3  WarmupCount=3  
+</code></pre>
+
+<table>
+<thead><tr><th>                 Method</th><th>Toolchain</th><th>LoopNum</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Gen 0</th><th>Gen 1</th><th>Gen 2</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>ConcurrentQueueBenchWrite</td><td>.NET Core 2.0</td><td>100000</td><td>1.816 ms</td><td>0.3366 ms</td><td>0.0190 ms</td><td>285.1563</td><td>285.1563</td><td>285.1563</td><td>1 MB</td>
+</tr><tr><td>BlockingCollectionWrite</td><td>.NET Core 2.0</td><td>100000</td><td>6.002 ms</td><td>1.6192 ms</td><td>0.0915 ms</td><td>281.2500</td><td>281.2500</td><td>281.2500</td><td>1 MB</td>
+</tr><tr><td>ThreadingChannelsWrite</td><td>.NET Core 2.0</td><td>100000</td><td>4.256 ms</td><td>0.5604 ms</td><td>0.0317 ms</td><td>281.2500</td><td>281.2500</td><td>281.2500</td><td>1 MB</td>
+</tr><tr><td>ConcurrentQueueBenchWriteRead</td><td>.NET Core 2.0</td><td>100000</td><td>3.243 ms</td><td>0.3243 ms</td><td>0.0183 ms</td><td>285.1563</td><td>285.1563</td><td>285.1563</td><td>1 MB</td>
+</tr><tr><td>BlockingCollectionWriteRead</td><td>.NET Core 2.0</td><td>100000</td><td>12.885 ms</td><td>2.9885 ms</td><td>0.1689 ms</td><td>281.2500</td><td>281.2500</td><td>281.2500</td><td>1 MB</td>
+</tr><tr><td>ThreadingChannelsWriteRead</td><td>.NET Core 2.0</td><td>100000</td><td>6.144 ms</td><td>2.7683 ms</td><td>0.1564 ms</td><td>281.2500</td><td>281.2500</td><td>281.2500</td><td>1 MB</td>
+</tr><tr><td>ConcurrentQueueBenchWrite</td><td>.NET Core 2.1</td><td>100000</td><td>1.872 ms</td><td>0.2313 ms</td><td>0.0131 ms</td><td>285.1563</td><td>285.1563</td><td>285.1563</td><td>1 MB</td>
+</tr><tr><td>BlockingCollectionWrite</td><td>.NET Core 2.1</td><td>100000</td><td>6.289 ms</td><td>1.4640 ms</td><td>0.0827 ms</td><td>281.2500</td><td>281.2500</td><td>281.2500</td><td>1.01 MB</td>
+</tr><tr><td>ThreadingChannelsWrite</td><td>.NET Core 2.1</td><td>100000</td><td>4.618 ms</td><td>1.6158 ms</td><td>0.0913 ms</td><td>281.2500</td><td>281.2500</td><td>281.2500</td><td>1.01 MB</td>
+</tr><tr><td>ConcurrentQueueBenchWriteRead</td><td>.NET Core 2.1</td><td>100000</td><td>3.593 ms</td><td>0.8562 ms</td><td>0.0484 ms</td><td>285.1563</td><td>285.1563</td><td>285.1563</td><td>1 MB</td>
+</tr><tr><td>BlockingCollectionWriteRead</td><td>.NET Core 2.1</td><td>100000</td><td>13.606 ms</td><td>2.1582 ms</td><td>0.1219 ms</td><td>281.2500</td><td>281.2500</td><td>281.2500</td><td>1.01 MB</td>
+</tr><tr><td>ThreadingChannelsWriteRead</td><td>.NET Core 2.1</td><td>100000</td><td>6.412 ms</td><td>0.6740 ms</td><td>0.0381 ms</td><td>281.2500</td><td>281.2500</td><td>281.2500</td><td>1.01 MB</td>
+</tr></tbody></table>
+</body>
+</html>
